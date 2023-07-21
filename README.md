@@ -3,7 +3,7 @@
 This repository contains a script for retrieving data of a netatmo weather
 station for use with telegraf.
 
-First obtain API keys from the Netatmo developmer website:
+First obtain API keys and refresh token from the Netatmo developmer website:
 
 https://dev.netatmo.com/
 
@@ -54,8 +54,7 @@ The script reads credentials from the `/etc/netatmo.yml` configuration file:
 ---
 client_id: <hex-value>
 client_secret: <hex-value>
-username: <email>
-password: <secret>
+refresh_token: <refresh-token>
 device_id: <station MAC>
 ```
 
@@ -69,7 +68,7 @@ You need to configure a `exec` input in your `telegraf.conf`:
   database = "telegraf"
 
 [[inputs.exec]]
-  commands = ["/usr/local/bin/netatmo"]
+  commands = [""/usr/local/bin/netatmo -c /usr/local/bin/netatmo.yml""]
   interval = "10m"
   timeout = "15s"
   data_format = "json"
